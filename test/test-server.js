@@ -11,6 +11,7 @@ var Destination = require('../server/models/destination')
 var should = chai.should()
 chai.use(chaiHttp)
 
+// *** Plans API test *** //
 describe('Plans', function () {
   Plan.collection.drop()
 
@@ -45,12 +46,17 @@ describe('Plans', function () {
   })
 })
 
+// *** Destinations API test *** //
 describe('Destinations', function () {
   Destination.collection.drop()
 
   beforeEach(function (done) {
     var newDestination = new Destination({
-      origin: '016'
+      origin: '016',
+      destinations: [{
+        destination: '011',
+        fare: 2.90
+      }]
     })
     newDestination.save(function (err) {
       done()
@@ -70,7 +76,13 @@ describe('Destinations', function () {
         res.body.should.be.a('array')
         res.body[0].should.have.property('_id')
         res.body[0].should.have.property('origin')
+        res.body[0].should.have.property('destinations')
         res.body[0].origin.should.equal('016')
+        res.body[0].destinations.should.deep.equal(
+          [{
+            destination: '011',
+            fare: 2.90
+          }])
         done()
       })
   })
