@@ -37,8 +37,8 @@ app.use('/', routes)
 
 // *** server config *** //
 var server = http.createServer(app)
-server.listen(1337, function () {
-  console.log('Node server running on http://localhost:1337')
+server.listen(3000, function () {
+  console.log('Node server running on http://localhost:3000')
 })
 
 module.exports = app
